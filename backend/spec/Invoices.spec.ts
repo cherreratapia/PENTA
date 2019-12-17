@@ -1,7 +1,10 @@
+import { InvoiceDao } from "src/daos/Invoice/InvoiceDao";
+import { Invoice } from "@entities";
+
 describe("Invoices", () => {
   it("Get invoices", () => {
-    const invoiceDAO = invoiceDao();
-    const invoices: Invoices[] = invoiceDAO.getAllInvoices();
+    const invoiceDAO = new InvoiceDao();
+    const invoices = invoiceDAO.getAllInvoices();
     expect(invoices.length).toBe(6);
     expect(invoices).toEqual([
       [
