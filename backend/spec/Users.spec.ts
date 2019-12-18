@@ -14,7 +14,7 @@ describe("Users Routes", () => {
     const response = userDao.add(user);
     expect(response).toBeDefined();
   });
-  it("Should return the user RUT", () => {
+  it("Should return the user RUT", async () => {
     const userDao = new UserDao();
 
     const userToAdd: User = {
@@ -22,8 +22,8 @@ describe("Users Routes", () => {
       businessName: "Company A",
       password: "companya1234"
     };
-    const token = userDao.add(userToAdd);
-    const user = userDao.get(token);
+    const token = await userDao.add(userToAdd);
+    const user = await userDao.get(token);
     expect(user).toEqual({
       rut: "111.111-6",
       businessName: "Company A"

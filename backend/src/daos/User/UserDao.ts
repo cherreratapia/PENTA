@@ -3,7 +3,7 @@ import { validate } from "rut.js";
 import bcrypt from "bcrypt";
 
 export interface IUserDao {
-  // get: (token: string) => Promise<User>;
+  get: (token: string) => Promise<Object>;
   add: (user: IUser) => Promise<string>;
 }
 
@@ -19,6 +19,18 @@ export class UserDao implements IUserDao {
       } else {
         reject(user);
       }
+    });
+  }
+  public get(token: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const user = this.users.find((user: User) => user.token === token);
+      if (!user) {
+        return reject(false);
+      }
+      resolve({
+        rut: user.rut,
+        businessName: user.businessName
+      });
     });
   }
 }
