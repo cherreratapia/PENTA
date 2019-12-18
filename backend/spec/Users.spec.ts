@@ -1,13 +1,13 @@
-import app from '@server';
-import supertest from 'supertest';
+import app from "@server";
+import supertest from "supertest";
 
-import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
-import { Response, SuperTest, Test } from 'supertest';
-import { IUser, User } from '@entities';
-import { UserDao } from '@daos';
-import { pErr, paramMissingError } from '@shared';
+import { BAD_REQUEST, CREATED, OK } from "http-status-codes";
+import { Response, SuperTest, Test } from "supertest";
+import { IUser, User } from "@entities";
+import { UserDao } from "@daos";
+import { pErr, paramMissingError } from "@shared";
 
-describe('Users Routes', () => {
+/*describe('Users Routes', () => {
 
     const usersPath = '/api/users';
     const getUsersPath = `${usersPath}/all`;
@@ -202,3 +202,4 @@ describe('Users Routes', () => {
         });
     });
 });
+*/

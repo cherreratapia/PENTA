@@ -7,7 +7,6 @@ import BaseRouter from "./routes";
 
 // Init express
 const app = express();
-
 // Add middleware/settings/routes to express.
 app.use(logger("dev"));
 app.use(express.json());

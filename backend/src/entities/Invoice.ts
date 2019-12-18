@@ -6,26 +6,26 @@ export enum INVOICE_TYPE {
   "TICKET" = "boleta"
 }
 export interface IInvoice {
-  emission: Date;
+  emission: number;
   type: INVOICE_TYPE;
-  folio: string;
+  folio: number;
   issuer: Company;
   receiver: Company;
   items: InvoiceDetail[];
 }
 
 export class Invoice implements IInvoice {
-  public emission: Date;
+  public emission: number;
   public type: INVOICE_TYPE;
-  public folio: string;
+  public folio: number;
   public issuer: Company;
   public receiver: Company;
   public items: InvoiceDetail[];
 
   constructor(
-    emission: Date,
+    emission: number,
     type: INVOICE_TYPE,
-    folio: string,
+    folio: number,
     issuer: Company,
     receiver: Company,
     items: InvoiceDetail[]
