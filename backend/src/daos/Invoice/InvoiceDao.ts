@@ -24,7 +24,6 @@ export class InvoiceDao implements IInvoiceDao {
           trim: true
         }) as any);
         const items: InvoiceDetail[] = [];
-        console.log("parsed > ", parsed);
         if (parsed.dte.items.detalle.length) {
           parsed.dte.items.detalle.forEach((detail: any) => {
             items.push({
@@ -55,7 +54,6 @@ export class InvoiceDao implements IInvoiceDao {
           items
         });
       }
-
       resolve(invoice);
     });
   }
