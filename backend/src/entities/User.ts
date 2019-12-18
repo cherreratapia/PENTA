@@ -1,23 +1,21 @@
-
+import uuid from "uuid/v4";
 export interface IUser {
-    id?: number;
-    name: string;
-    email: string;
+  token?: string;
+  rut: string;
+  businessName: string;
+  password: string;
 }
 
 export class User implements IUser {
+  public token?: string;
+  public rut: string;
+  public businessName: string;
+  public password: string;
 
-    public id?: number;
-    public name: string;
-    public email: string;
-
-    constructor(nameOrUser: string | IUser, email?: string) {
-        if (typeof nameOrUser === 'string') {
-            this.name = nameOrUser;
-            this.email = email || '';
-        } else {
-            this.name = nameOrUser.name;
-            this.email = nameOrUser.email;
-        }
-    }
+  constructor(rut: string, businessName: string, password: string) {
+    this.rut = rut;
+    this.businessName = businessName;
+    this.password = password;
+    this.token = uuid();
+  }
 }

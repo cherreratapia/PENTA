@@ -1,46 +1,24 @@
-import { IUser } from '@entities';
+import { IUser, User } from "../../entities";
+import { validate } from "rut.js";
+import bcrypt from "bcrypt";
 
 export interface IUserDao {
-    getAll: () => Promise<IUser[]>;
-    add: (user: IUser) => Promise<void>;
-    update: (user: IUser) => Promise<void>;
-    delete: (id: number) => Promise<void>;
+  // get: (token: string) => Promise<User>;
+  add: (user: IUser) => Promise<string>;
 }
 
 export class UserDao implements IUserDao {
+  users: User[] = [];
 
-    /**
-     *
-     */
-    public async getAll(): Promise<IUser[]> {
-        // TODO
-        return [] as any;
-    }
-
-    /**
-     *
-     * @param user
-     */
-    public async add(user: IUser): Promise<void> {
-        // TODO
-        return {} as any;
-    }
-
-    /**
-     *
-     * @param user
-     */
-    public async update(user: IUser): Promise<void> {
-        // TODO
-        return {} as any;
-    }
-
-    /**
-     *
-     * @param id
-     */
-    public async delete(id: number): Promise<void> {
-        // TODO
-        return {} as any;
-    }
+  public add(user: IUser): Promise<string> {
+    return new Promise(async (resolve, reject) => {
+      if (validate(user.rut)) {
+        const password = await bcrypt.hashSync(user.password, 10);
+        this.users.push(new User(user.rut, user.businessName, password));
+        resolve(this.users[this.users.length - 1].token);
+      } else {
+        reject(user);
+      }
+    });
+  }
 }
