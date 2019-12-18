@@ -5,10 +5,12 @@ import parser from "xml-js";
 import { InvoiceDetail } from "src/entities/Invoice-Detail";
 
 export interface IInvoiceDao {
-  getAll: () => Promise<string[]>;
+  getAll: () => Promise<any[]>;
+  getByCompany: (filter: string) => Promise<Invoice[]>;
 }
 
 export class InvoiceDao implements IInvoiceDao {
+  public invoice: Invoice[] = [];
   /**
    *
    */
@@ -54,7 +56,25 @@ export class InvoiceDao implements IInvoiceDao {
           items
         });
       }
-      resolve(invoice);
+      this.invoice = invoice;
+      resolve(this.invoice);
+    });
+  }
+
+  public async getByCompany(filter: string): Promise<Invoice[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (this.invoice.length === 0) {
+          await this.getAll();
+        }
+        resolve(
+          this.invoice.filter(
+            (invoice: Invoice) => invoice.issuer.RUT === filter
+          )
+        );
+      } catch (error) {
+        reject(false);
+      }
     });
   }
 }
