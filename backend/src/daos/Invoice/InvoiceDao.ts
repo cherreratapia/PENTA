@@ -7,6 +7,7 @@ import { InvoiceDetail } from "src/entities/Invoice-Detail";
 export interface IInvoiceDao {
   getAll: () => Promise<any[]>;
   getByCompany: (filter: string) => Promise<Invoice[]>;
+  getDetail: (emission: number) => Promise<Invoice>;
 }
 
 export class InvoiceDao implements IInvoiceDao {
@@ -72,6 +73,22 @@ export class InvoiceDao implements IInvoiceDao {
           .sort((a: Invoice, b: Invoice) => b.emission - a.emission);
         resolve(emission);
       } catch (error) {
+        console.error(`Error: `, error);
+        reject(false);
+      }
+    });
+  }
+  public async getDetail(emission: number): Promise<Invoice> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (this.invoice.length === 0) {
+          await this.getAll();
+        }
+        resolve(
+          this.invoice.find((invoice: Invoice) => invoice.emission === emission)
+        );
+      } catch (error) {
+        console.error(`Error: `, error);
         reject(false);
       }
     });

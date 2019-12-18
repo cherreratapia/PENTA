@@ -238,7 +238,8 @@ describe("Invoices", () => {
   });
   it("Get detail Invoice", async () => {
     const invoiceDao = new InvoiceDao();
-    const invoice: Invoice = await invoiceDao.getDetail();
+    const filterBy = 1559487200;
+    const invoice: Invoice = await invoiceDao.getDetail(filterBy);
     expect(invoice).toEqual({
       emission: 1559487200,
       type: "factura",
