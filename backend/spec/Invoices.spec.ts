@@ -160,24 +160,29 @@ describe("Invoices", () => {
     const invoice: Invoice[] = await invoiceDao.getByCompany(filterBy);
     expect(invoice).toEqual([
       {
-        emission: 1559347200,
+        emission: 1559487200,
         type: "factura",
-        folio: 1,
+        folio: 3,
         issuer: {
           RUT: "111.111-6",
           businessName: "Company A"
         },
+        items: [
+          {
+            amount: 3000,
+            detail: "Product D",
+            iva: 570
+          },
+          {
+            amount: 1000,
+            detail: "Product E",
+            iva: 190
+          }
+        ],
         receiver: {
           RUT: "222.222-1",
           businessName: "Company B"
-        },
-        items: [
-          {
-            amount: 100,
-            detail: "Service",
-            iva: 19
-          }
-        ]
+        }
       },
       {
         emission: 1559433600,
@@ -210,29 +215,24 @@ describe("Invoices", () => {
         ]
       },
       {
-        emission: 1559487200,
+        emission: 1559347200,
         type: "factura",
-        folio: 3,
+        folio: 1,
         issuer: {
           RUT: "111.111-6",
           businessName: "Company A"
         },
-        items: [
-          {
-            amount: 3000,
-            detail: "Product D",
-            iva: 570
-          },
-          {
-            amount: 1000,
-            detail: "Product E",
-            iva: 190
-          }
-        ],
         receiver: {
           RUT: "222.222-1",
           businessName: "Company B"
-        }
+        },
+        items: [
+          {
+            amount: 100,
+            detail: "Service",
+            iva: 19
+          }
+        ]
       }
     ]);
   });

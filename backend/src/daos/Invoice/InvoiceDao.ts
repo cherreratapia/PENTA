@@ -67,11 +67,10 @@ export class InvoiceDao implements IInvoiceDao {
         if (this.invoice.length === 0) {
           await this.getAll();
         }
-        resolve(
-          this.invoice.filter(
-            (invoice: Invoice) => invoice.issuer.RUT === filter
-          )
-        );
+        const emission = this.invoice
+          .filter((invoice: Invoice) => invoice.issuer.RUT === filter)
+          .sort((a: Invoice, b: Invoice) => b.emission - a.emission);
+        resolve(emission);
       } catch (error) {
         reject(false);
       }
