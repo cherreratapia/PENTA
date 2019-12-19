@@ -85,7 +85,9 @@ export class InvoiceDao implements IInvoiceDao {
           await this.getAll();
         }
         resolve(
-          this.invoice.find((invoice: Invoice) => invoice.emission === emission)
+          this.invoice.find(
+            (invoice: Invoice) => invoice.emission === Number(emission)
+          )
         );
       } catch (error) {
         console.error(`Error: `, error);

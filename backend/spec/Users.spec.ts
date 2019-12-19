@@ -24,10 +24,7 @@ describe("Users Routes", () => {
     };
     const token = await userDao.add(userToAdd);
     const user = await userDao.get(token);
-    expect(user).toEqual({
-      rut: "111.111-6",
-      businessName: "Company A"
-    });
+    expect(user).toBe("111.111-6");
   });
   it("Exist user", async () => {
     const userDao = new UserDao();

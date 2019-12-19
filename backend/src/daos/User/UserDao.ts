@@ -9,7 +9,20 @@ export interface IUserDao {
 }
 
 export class UserDao implements IUserDao {
-  users: User[] = [];
+  users: User[] = [
+    {
+      rut: "111.111-6",
+      businessName: "Company A",
+      password: "6a18d85cb6d0adcaf3cf5bf1f9410428",
+      token: "440617fd-5e46-4213-ae7d-7daff2ec8fe7"
+    },
+    {
+      rut: "222.222-1",
+      businessName: "Company B",
+      password: "d4379b88756404d01a2de9d7465d262b",
+      token: "fe4d56ae-e661-4b1c-a150-156060e63323"
+    }
+  ];
 
   public add(user: IUser): Promise<string> {
     return new Promise(async (resolve, reject) => {
@@ -32,10 +45,9 @@ export class UserDao implements IUserDao {
     return new Promise(async (resolve, reject) => {
       try {
         const passwordHashed = await md5(password);
-        const user = this.users.find((user: User) => {
-          console.log("user in find", user);
-          return user.rut == rut && user.password == passwordHashed;
-        });
+        const user = this.users.find(
+          (user: User) => user.rut == rut && user.password == passwordHashed
+        );
         if (!user) return reject(false);
 
         resolve(user.token);
@@ -52,10 +64,7 @@ export class UserDao implements IUserDao {
       if (!user) {
         return reject(false);
       }
-      resolve({
-        rut: user.rut,
-        businessName: user.businessName
-      });
+      resolve(user.rut);
     });
   }
 }
