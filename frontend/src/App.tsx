@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./style/index.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import User from "./components/user";
+import InvoiceList from "./components/invoice-list";
+import { Router, Link } from "@reach/router";
+import ProtectedRoute from "./components/protected-route";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <User path="/" />
+      <InvoiceList path="/invoice" />
+    </Router>
   );
-}
+};
 
 export default App;
