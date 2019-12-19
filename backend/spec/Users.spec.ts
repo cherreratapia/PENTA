@@ -32,13 +32,12 @@ describe("Users Routes", () => {
   it("Exist user", async () => {
     const userDao = new UserDao();
 
-    const userToAdd: User = {
+    const userToAdd = {
       rut: "111.111-6",
-      businessName: "Company A",
       password: "companya1234"
     };
-    const user = userDao.add(userToAdd);
-    const result = userDao.validate(user);
-    expect(user).not.toBe(false);
+    const user = await userDao.add(userToAdd);
+    const result = await userDao.validate(userToAdd.rut, userToAdd.password);
+    expect(result).not.toBe(false);
   });
 });

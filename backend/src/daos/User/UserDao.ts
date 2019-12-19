@@ -1,10 +1,11 @@
 import { IUser, User } from "../../entities";
 import { validate } from "rut.js";
-import bcrypt from "bcrypt";
+import md5 from "md5";
 
 export interface IUserDao {
   get: (token: string) => Promise<Object>;
   add: (user: IUser) => Promise<string>;
+  validate: (user: string, password: string) => Promise<string | boolean>;
 }
 
 export class UserDao implements IUserDao {
@@ -12,12 +13,35 @@ export class UserDao implements IUserDao {
 
   public add(user: IUser): Promise<string> {
     return new Promise(async (resolve, reject) => {
-      if (validate(user.rut)) {
-        const password = await bcrypt.hashSync(user.password, 10);
-        this.users.push(new User(user.rut, user.businessName, password));
-        resolve(this.users[this.users.length - 1].token);
-      } else {
-        reject(user);
+      try {
+        if (validate(user.rut)) {
+          const password = await md5(user.password);
+          this.users.push(new User(user.rut, user.businessName, password));
+          resolve(this.users[this.users.length - 1].token);
+        } else {
+          reject(user);
+        }
+      } catch (error) {
+        console.log("error", error);
+        reject(false);
+      }
+    });
+  }
+
+  public validate(rut: string, password: string): Promise<string | boolean> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const passwordHashed = await md5(password);
+        const user = this.users.find((user: User) => {
+          console.log("user in find", user);
+          return user.rut == rut && user.password == passwordHashed;
+        });
+        if (!user) return reject(false);
+
+        resolve(user.token);
+      } catch (error) {
+        console.log("error ", error);
+        reject(false);
       }
     });
   }
