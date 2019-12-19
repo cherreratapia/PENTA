@@ -29,4 +29,16 @@ describe("Users Routes", () => {
       businessName: "Company A"
     });
   });
+  it("Exist user", async () => {
+    const userDao = new UserDao();
+
+    const userToAdd: User = {
+      rut: "111.111-6",
+      businessName: "Company A",
+      password: "companya1234"
+    };
+    const user = userDao.add(userToAdd);
+    const result = userDao.validate(user);
+    expect(user).not.toBe(false);
+  });
 });

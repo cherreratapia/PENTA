@@ -21,6 +21,7 @@ export class UserDao implements IUserDao {
       }
     });
   }
+
   public get(token: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const user = this.users.find((user: User) => user.token === token);
