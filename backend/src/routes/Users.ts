@@ -19,10 +19,14 @@ router.post("/register", async (req: Request, res: Response) => {
     businessName,
     password
   };
-  const response = await userDao.add(user);
-  if (!response)
+  try {
+    const response = await userDao.add(user);
+    if (!response)
+      return res.status(BAD_REQUEST).json({ message: "RUT INVALIDO" });
+    return res.status(CREATED).json({ token: response });
+  } catch (error) {
     return res.status(BAD_REQUEST).json({ message: "RUT INVALIDO" });
-  return res.status(CREATED).json({ token: response });
+  }
 });
 
 /******************************************************************************
@@ -33,12 +37,18 @@ router.post("/login", async (req: Request, res: Response) => {
   const { rut, password } = req.body;
   if (!rut || !password) return res.status(BAD_REQUEST);
 
-  const response = await userDao.validate(rut, password);
-  if (!response)
+  try {
+    const response = await userDao.validate(rut, password);
+    if (!response)
+      return res
+        .status(BAD_REQUEST)
+        .json({ message: "RUT o CONTRASEÑA INVALIDOS" });
+    return res.status(OK).json({ token: response });
+  } catch (error) {
     return res
       .status(BAD_REQUEST)
       .json({ message: "RUT o CONTRASEÑA INVALIDOS" });
-  return res.status(OK).json({ token: response });
+  }
 });
 
 export default router;

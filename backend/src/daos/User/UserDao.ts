@@ -50,7 +50,7 @@ export class UserDao implements IUserDao {
         );
         if (!user) return reject(false);
 
-        resolve(user.token);
+        return resolve(user.token);
       } catch (error) {
         console.log("error ", error);
         reject(false);
